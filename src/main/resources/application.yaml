@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: SpringFirstProject
+
+server:
+  port: 8081
+
+
