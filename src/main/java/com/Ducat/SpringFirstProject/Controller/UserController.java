@@ -1,6 +1,8 @@
 package com.Ducat.SpringFirstProject.Controller;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Ducat.SpringFirstProject.Entity.UserEntity;
 import com.Ducat.SpringFirstProject.Service.UserService;
-import java.util.Map;
+
 import java.util.List;
 
 
@@ -23,20 +25,30 @@ public class UserController {
         this.userService = userServiceBean;
     }
     @GetMapping("/getAll")
-    public List<Map<String, String>> dashBoardEndpoint(){
+    public List<UserEntity> dashBoardEndpoint() throws Exception{
+        System.out.println("inside getAll " + userService.getUsers());
         return userService.getUsers();
 
 
     }
 
-    @GetMapping("/get")
-    public String getEndpoit(){
-        return "userController working";
-
+    @DeleteMapping("/delete/{id}")
+    public void deleteEndPoint(@PathVariable int id) throws Exception{
+        userService.deleteUserService(id);
     }
+
+    // @PostMapping("/update")
+    // public UserEntity updateEndpoint(@RequestBody UserEntity userEntity) throws Exception{
+    //     return userService.updateUserService(userEntity);
+    // }
+
+    // @GetMapping("/get")
+    // public String getEndpoit(){
+    //     return "userController working";
+
+    // }
     @PostMapping("/signUp")
-    public void signUpEndpoint(@RequestBody Map<String, String> userDataSent){
-        System.out.println("Data receive in controller layer "+ userDataSent);
+    public void signUpEndpoint(@RequestBody UserEntity userDataSent){
           userService.saveUser(userDataSent);
         
     }
